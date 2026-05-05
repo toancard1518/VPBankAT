@@ -174,8 +174,6 @@ class BillPaymentAccessibilityService : AccessibilityService() {
     private fun handleSelectElecType(root: AccessibilityNodeInfo) {
         val mkh = mkhList[currentIndex]
         val prefix = mkh.uppercase().take(2)
-        AppConfig.currentMkhPrefix = prefix
-
         val targetText = when (prefix) {
             "PB" -> AppConfig.TEXT_ELEC_TOAN_QUOC
             "PE" -> AppConfig.TEXT_ELEC_HCM
@@ -517,7 +515,6 @@ class BillPaymentAccessibilityService : AccessibilityService() {
         val intent = Intent(AppConfig.ACTION_PROGRESS).apply {
             putExtra(AppConfig.EXTRA_CURRENT, current)
             putExtra(AppConfig.EXTRA_TOTAL,   total)
-            putExtra(AppConfig.EXTRA_MKH,     mkh)
             putExtra(AppConfig.EXTRA_STATUS,  status)
         }
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)

@@ -15,9 +15,6 @@ object AppConfig {
     /** PIN Smart OTP lưu tạm trong bộ nhớ (KHÔNG lưu xuống disk). */
     var smartOtpPin: String = ""
 
-    /** Prefix MKH đang xử lý: "PB" hoặc "PE". Dùng để chọn loại điện. */
-    var currentMkhPrefix: String = ""
-
     // ── Text content của các nút/màn hình (dùng để findNodesByText) ──────────
 
     /** Màn hình nhập MKH: hint/label của field Mã khách hàng */
@@ -84,6 +81,5 @@ object AppConfig {
     // ── Intent extras ────────────────────────────────────────────────────────
     const val EXTRA_CURRENT = "current"
     const val EXTRA_TOTAL   = "total"
-    const val EXTRA_MKH     = "mkh"
     const val EXTRA_STATUS  = "status"
 }
