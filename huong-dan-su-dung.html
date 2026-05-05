@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VPBank Controller – Hướng dẫn sử dụng</title>
+  <style>
+    :root {
+      --primary: #004b8d;
+      --accent:  #e30613;
+      --bg:      #f4f6f9;
+      --card:    #ffffff;
+      --border:  #dde3ec;
+      --text:    #1a1a2e;
+      --muted:   #6b7280;
+      --success: #16a34a;
+      --warn:    #d97706;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #0070cc 100%);
+      color: #fff;
+      padding: 40px 32px 32px;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; letter-spacing: 1px; }
+    header p  { margin-top: 8px; opacity: .85; font-size: 1rem; }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 20px;
+      padding: 2px 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-top: 10px;
+      letter-spacing: .5px;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 960px;
+      margin: 32px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── Section titles ── */
+    h2 {
+      color: var(--primary);
+      font-size: 1.4rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin: 40px 0 18px;
+    }
+    h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin: 22px 0 10px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    /* ── Diagram boxes ── */
+    .diagram {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      font-size: .82rem;
+      border-radius: 10px;
+      padding: 22px 24px;
+      overflow-x: auto;
+      line-height: 1.6;
+      white-space: pre;
+      margin-bottom: 20px;
+    }
+
+    /* ── Steps ── */
+    .steps { counter-reset: step; list-style: none; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: .9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .steps li .content strong { color: var(--primary); }
+
+    /* ── Table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .92rem;
+      margin-top: 10px;
+    }
+    th {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    tr:nth-child(even) td { background: #f8faff; }
+
+    /* ── Code inline ── */
+    code {
+      background: #eef2f7;
+      border: 1px solid #d0d9e8;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      font-size: .88em;
+      color: #c0392b;
+    }
+
+    /* ── Alert boxes ── */
+    .alert {
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: .93rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-info    { background: #eff6ff; border-left: 4px solid #3b82f6; }
+    .alert-warn    { background: #fffbeb; border-left: 4px solid var(--warn); }
+    .alert-success { background: #f0fdf4; border-left: 4px solid var(--success); }
+    .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Flow list ── */
+    .flow-list {
+      list-style: none;
+      padding: 0;
+    }
+    .flow-list li {
+      padding: 8px 0 8px 36px;
+      position: relative;
+      border-bottom: 1px dashed var(--border);
+    }
+    .flow-list li:last-child { border-bottom: none; }
+    .flow-list li::before {
+      content: attr(data-n);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 24px;
+      height: 24px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: .75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Prefix badges ── */
+    .pb { background:#1d4ed8; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82rem; font-weight:700; }
+    .pe { background:#7c3aed; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82rem; font-weight:700; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .82rem;
+      padding: 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 26px;
+      margin-bottom: 32px;
+    }
+    .toc h4 { color: var(--primary); margin-bottom: 10px; }
+    .toc ol  { padding-left: 20px; }
+    .toc li  { margin-bottom: 4px; }
+    .toc a   { color: var(--primary); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ VPBank Controller</h1>
+  <p>Công cụ tự động thanh toán hóa đơn điện qua VPBank NEO</p>
+  <div class="badge">v1.1 · Release Build · Tháng 5/2026</div>
+</header>
+
+<main>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h4>📋 Mục lục</h4>
+    <ol>
+      <li><a href="#kien-truc">Kiến trúc ứng dụng</a></li>
+      <li><a href="#state-machine">Sơ đồ State Machine</a></li>
+      <li><a href="#file-import">Luồng xử lý file import</a></li>
+      <li><a href="#yeu-cau">Yêu cầu</a></li>
+      <li><a href="#cai-apk">Bước 1 – Cài APK</a></li>
+      <li><a href="#accessibility">Bước 2 – Bật Accessibility Service</a></li>
+      <li><a href="#file-mkh">Bước 3 – Chuẩn bị file MKH</a></li>
+      <li><a href="#nhap-tt">Bước 4 – Nhập thông tin trong app</a></li>
+      <li><a href="#chay">Bước 5 – Chạy tự động</a></li>
+      <li><a href="#luu-y">Lưu ý quan trọng</a></li>
+    </ol>
+  </div>
+
+  <!-- ① Kiến trúc -->
+  <h2 id="kien-truc">1. Kiến trúc ứng dụng</h2>
+  <div class="card">
+    <p style="margin-bottom:14px;color:var(--muted);font-size:.92rem;">
+      App gồm 4 thành phần chính giao tiếp qua <strong>LocalBroadcast</strong> và <strong>SharedPreferences</strong>.
+      Service sử dụng Android Accessibility API để điều khiển VPBank NEO.
+    </p>
+    <div class="diagram">┌─────────────────────────────────────────────────────────────────────┐
+│                        VPBank Controller                            │
+│                                                                     │
+│  ┌──────────────────────┐         ┌───────────────────────────────┐ │
+│  │    MainActivity      │         │  BillPaymentAccessibility     │ │
+│  │    (Giao diện)       │         │  Service  (State Machine)     │ │
+│  │                      │         │                               │ │
+│  │  • Import TXT/CSV/   │         │  • Lắng nghe sự kiện UI      │ │
+│  │    XLSX              │◄───────►│    của VPBank NEO             │ │
+│  │  • Nhập PIN 6 số     │         │  • Tự động click / nhập text  │ │
+│  │  • Nút Bắt đầu/Dừng │         │  • Xử lý từng MKH theo       │ │
+│  │  • Thanh tiến trình  │         │    vòng lặp                   │ │
+│  └──────────┬───────────┘         └───────────────────────────────┘ │
+│             │ LocalBroadcast              ▲ LocalBroadcast           │
+│             │ ACTION_START / STOP         │ ACTION_PROGRESS          │
+│             ▼                             │                          │
+│  ┌──────────────────────┐    ┌────────────┴──────────────────────┐  │
+│  │      AppConfig       │    │        SharedPreferences          │  │
+│  │   (hằng số + state)  │    │  • Danh sách MKH (JSON)          │  │
+│  │                      │    │  • currentIndex                   │  │
+│  │  currentMkhPrefix    │    │  • isRunning                      │  │
+│  │  TEXT_ELEC_TOAN_QUOC │    │  • vpbankPackage                  │  │
+│  │  TEXT_ELEC_HCM       │    │                                   │  │
+│  └──────────────────────┘    └───────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────┘
+                                       │
+                       Android Accessibility API
+                                       │
+                             ┌─────────▼──────────┐
+                             │    VPBank NEO App  │
+                             │  com.vnpay.vpbank  │
+                             │     online         │
+                             └────────────────────┘</div>
+  </div>
+
+  <!-- ② State Machine -->
+  <h2 id="state-machine">2. Sơ đồ State Machine</h2>
+  <div class="card">
+    <p style="margin-bottom:14px;color:var(--muted);font-size:.92rem;">
+      Service hoạt động như một máy trạng thái. Mỗi sự kiện từ VPBank NEO kích hoạt bước xử lý tiếp theo.
+    </p>
+    <div class="diagram">                       ┌─────────┐
+                       │  IDLE   │◄─────────────── Nhấn Dừng
+                       └────┬────┘
+                            │ Nhấn Bắt đầu
+                            ▼
+                  ┌──────────────────────┐
+                  │  SELECT_ELEC_TYPE    │  ← Đọc 2 ký tự đầu MKH
+                  └──────────┬───────────┘
+                             │
+              ┌──────────────┼──────────────┐
+           "PB"           "PE"          Khác
+              │               │               │
+              ▼               ▼               ▼
+        Click              Click          Bỏ qua
+      "Điện toàn         "Điện HCM"    index++ → lặp lại
+        quốc"
+              │               │
+              └───────┬───────┘
+                      ▼
+               ┌────────────┐
+               │ INPUT_MKH  │  ← Xoá text cũ, gõ MKH
+               └─────┬──────┘
+                     ▼
+            ┌──────────────────┐
+            │ CLICK_TIEP_TUC_1 │  ← Bấm "Tiếp tục"
+            └────────┬─────────┘
+                     ▼
+          ┌─────────────────────┐
+          │ WAIT_INVOICE_SCREEN │  ← Chờ hiện thông tin KH + hóa đơn
+          └────────┬────────────┘
+                   ▼
+          ┌──────────────────┐
+          │ DISMISS_AUTO_PAY │  ← Bỏ popup "Kích hoạt tự động" (nếu có)
+          └────────┬─────────┘
+                   ▼
+          ┌──────────────────┐
+          │ CLICK_TIEP_TUC_2 │  ← Bấm "Tiếp tục" lần 2
+          └────────┬─────────┘
+                   ▼
+          ┌──────────────────┐
+          │ CLICK_XAC_NHAN   │  ← Màn hình xác nhận → bấm "Xác nhận"
+          └────────┬─────────┘
+                   ▼
+         ┌────────────────────┐
+         │ INPUT_SMART_OTP_PIN│  ← Gõ từng chữ số PIN 6 ký tự
+         └────────┬───────────┘
+                   ▼
+         ┌────────────────────┐
+         │ CLICK_XAC_NHAN_GD  │  ← Bấm "Xác nhận giao dịch"
+         └────────┬───────────┘
+                   ▼
+          ┌────────────────┐
+          │  WAIT_SUCCESS  │  ← Chờ màn hình "Thành công"
+          └────────┬───────┘
+                   ▼
+          ┌────────────────┐
+          │  CLICK_NEW_TX  │  ← Bấm "Giao dịch mới"
+          └────────┬───────┘
+                   │
+          ┌────────┴─────────┐
+     Còn MKH             Hết MKH
+          │                   │
+          ▼                   ▼
+  SELECT_ELEC_TYPE         ┌──────┐
+  (MKH tiếp theo)          │ DONE │
+                           └──────┘</div>
+  </div>
+
+  <!-- ③ File Import -->
+  <h2 id="file-import">3. Luồng xử lý file import</h2>
+  <div class="card">
+    <div class="diagram">Người dùng nhấn "Ấp TXT/CSV"
+           │
+    File Picker mở ra
+           │
+    ┌──────┴───────┐
+    │              │
+  XLSX          TXT / CSV
+    │              │
+    ▼              ▼
+parseXlsx()    parseMkhFromText()
+  • Unzip          • Split theo dòng
+  • Đọc            • Split dấu , hoặc ;
+    sharedStrings   • Lấy cột đầu tiên
+  • Đọc sheet1
+  • Lấy cột A
+    │              │
+    └──────┬───────┘
+           ▼
+   Lọc & sắp xếp:
+   PB... → đầu danh sách  (Điện toàn quốc)
+   PE... → tiếp theo      (Điện Hồ Chí Minh)
+   Khác  → bỏ qua
+           │
+           ▼
+   Lưu vào EditText MKH List
+   + Hiện Toast "Đã load N MKH"</div>
+  </div>
+
+  <!-- ④ Yêu cầu -->
+  <h2 id="yeu-cau">4. Yêu cầu</h2>
+  <div class="card">
+    <table>
+      <tr><th>Yêu cầu</th><th>Chi tiết</th></tr>
+      <tr><td>Hệ điều hành</td><td>Android 7.0 (API 24) trở lên</td></tr>
+      <tr><td>VPBank NEO</td><td>Đã cài và <strong>đăng nhập sẵn</strong></td></tr>
+      <tr><td>Smart OTP</td><td>Đã đăng ký và kích hoạt trong VPBank NEO</td></tr>
+      <tr><td>PIN Smart OTP</td><td>PIN 6 chữ số bạn tự đặt khi kích hoạt Smart OTP</td></tr>
+      <tr><td>Kết nối mạng</td><td>Cần kết nối internet trong suốt quá trình chạy</td></tr>
+    </table>
+  </div>
+
+  <!-- ⑤ Cài APK -->
+  <h2 id="cai-apk">Bước 1 – Cài APK lên điện thoại</h2>
+  <div class="card">
+    <ol class="steps">
+      <li>
+        <div class="content">
+          <strong>Bật cài từ nguồn không xác định</strong><br>
+          <span style="color:var(--muted);font-size:.92rem;">
+            Android 8+: Cài đặt → Ứng dụng → [File manager] → <em>Cho phép từ nguồn này</em><br>
+            Android 7: Cài đặt → Bảo mật → <em>Nguồn không rõ ràng</em> → bật
+          </span>
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          <strong>Chuyển file APK sang điện thoại</strong><br>
+          <span style="color:var(--muted);font-size:.92rem;">
+            Qua Zalo, email, cáp USB, hoặc Google Drive. File: <code>app-release.apk</code> (~4.3 MB)
+          </span>
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          <strong>Mở file APK → Cài đặt → Mở</strong><br>
+          <span style="color:var(--muted);font-size:.92rem;">
+            Xác nhận nếu hệ thống hỏi về quyền truy cập.
+          </span>
+        </div>
+      </li>
+    </ol>
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠️</span>
+      <span>Không cần USB Debug hay chế độ Developer. APK đã được ký bằng release keystore — VPBank NEO sẽ hoạt động bình thường.</span>
+    </div>
+  </div>
+
+  <!-- ⑥ Accessibility -->
+  <h2 id="accessibility">Bước 2 – Bật Accessibility Service</h2>
+  <div class="card">
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <span>Bước này <strong>bắt buộc</strong>. App dùng Accessibility Service để điều khiển VPBank NEO thay người dùng.</span>
+    </div>
+    <ol class="steps" style="margin-top:16px;">
+      <li>
+        <div class="content">
+          Vào <strong>Cài đặt → Trợ năng</strong> (hoặc <em>Accessibility</em>)
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          Tìm <strong>"VPBank Controller"</strong> trong danh sách dịch vụ
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          Nhấn vào → bật công tắc → nhấn <strong>OK / Cho phép</strong> khi có hộp thoại cảnh báo
+        </div>
+      </li>
+    </ol>
+    <div class="alert alert-success" style="margin-top:12px;">
+      <span class="alert-icon">✅</span>
+      <span>Nếu chưa bật, app sẽ tự động mở trang Accessibility Settings khi bạn nhấn "Bắt đầu".</span>
+    </div>
+  </div>
+
+  <!-- ⑦ File MKH -->
+  <h2 id="file-mkh">Bước 3 – Chuẩn bị file MKH</h2>
+  <div class="card">
+    <h3>Định dạng hỗ trợ</h3>
+    <table>
+      <tr><th>Định dạng</th><th>Yêu cầu</th></tr>
+      <tr>
+        <td><strong>Excel XLSX</strong></td>
+        <td>MKH nằm ở <strong>cột A</strong>, bắt đầu từ dòng 1 (hoặc dòng 2 nếu có tiêu đề)</td>
+      </tr>
+      <tr>
+        <td><strong>CSV / TXT</strong></td>
+        <td>MKH ở <strong>cột đầu tiên</strong>, phân cách bằng dấu <code>,</code> hoặc <code>;</code></td>
+      </tr>
+    </table>
+
+    <h3 style="margin-top:20px;">Prefix MKH hợp lệ</h3>
+    <table>
+      <tr><th>Prefix</th><th>Loại điện</th><th>Ví dụ MKH</th></tr>
+      <tr>
+        <td><span class="pb">PB</span></td>
+        <td>Điện toàn quốc (EVN)</td>
+        <td><code>PB1234567</code>, <code>PB9876543</code></td>
+      </tr>
+      <tr>
+        <td><span class="pe">PE</span></td>
+        <td>Điện Hồ Chí Minh (EVN HCM)</td>
+        <td><code>PE9876543</code>, <code>PE1111222</code></td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted)">Khác</td>
+        <td style="color:var(--muted)">Không hỗ trợ</td>
+        <td style="color:var(--muted)">Tự động bỏ qua</td>
+      </tr>
+    </table>
+
+    <h3 style="margin-top:20px;">Ví dụ file CSV</h3>
+    <div class="diagram" style="font-size:.85rem; padding:14px 18px;">PB1234567
+PB2345678
+PB3456789
+PE9876543
+PE8765432</div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ️</span>
+      <span>Sau khi import, app tự sắp xếp: <span class="pb">PB</span> lên đầu, <span class="pe">PE</span> theo sau. Dòng tiêu đề (không có prefix PB/PE) sẽ bị bỏ qua tự động.</span>
+    </div>
+  </div>
+
+  <!-- ⑧ Nhập thông tin -->
+  <h2 id="nhap-tt">Bước 4 – Nhập thông tin trong app</h2>
+  <div class="card">
+    <ol class="steps">
+      <li>
+        <div class="content">
+          <strong>Import file MKH</strong><br>
+          Nhấn nút <strong>"Ấp TXT/CSV"</strong> → chọn file từ bộ nhớ máy.<br>
+          <span style="color:var(--muted);font-size:.92rem;">
+            App hiện toast xác nhận số lượng: <em>"Đã load N MKH"</em>.
+            Kiểm tra danh sách MKH hiển thị trong ô text.
+          </span>
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          <strong>Nhập PIN Smart OTP (6 chữ số)</strong><br>
+          <span style="color:var(--muted);font-size:.92rem;">
+            Đây là mã PIN bạn <em>tự đặt</em> khi kích hoạt Smart OTP trong VPBank NEO —
+            khác với mã OTP ngẫu nhiên.
+          </span>
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          <strong>(Tuỳ chọn) Package VPBank NEO</strong><br>
+          <span style="color:var(--muted);font-size:.92rem;">
+            Mặc định: <code>com.vnpay.vpbankonline</code>. Không cần thay đổi.
+          </span>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ⑨ Chạy -->
+  <h2 id="chay">Bước 5 – Chạy tự động</h2>
+  <div class="card">
+    <ol class="steps">
+      <li>
+        <div class="content">
+          Mở <strong>VPBank NEO</strong> → vào <strong>Thanh toán hóa đơn → Điện</strong>
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          Chuyển lại <strong>VPBank Controller</strong>
+        </div>
+      </li>
+      <li>
+        <div class="content">
+          Nhấn <strong>"Bắt đầu"</strong>
+        </div>
+      </li>
+    </ol>
+
+    <h3 style="margin-top:18px;">App sẽ tự động thực hiện với mỗi MKH:</h3>
+    <ul class="flow-list">
+      <li data-n="1">Chọn <strong>"Điện toàn quốc"</strong> hoặc <strong>"Điện Hồ Chí Minh"</strong> theo prefix PB/PE</li>
+      <li data-n="2">Nhập mã khách hàng vào ô MKH → bấm <strong>Tiếp tục</strong></li>
+      <li data-n="3">Chờ hiện thông tin hóa đơn → bấm <strong>Tiếp tục</strong></li>
+      <li data-n="4">Bỏ popup <em>"Kích hoạt thanh toán tự động"</em> (nếu xuất hiện)</li>
+      <li data-n="5">Bấm <strong>Xác nhận</strong> thanh toán</li>
+      <li data-n="6">Tự động nhập <strong>PIN Smart OTP</strong> 6 chữ số</li>
+      <li data-n="7">Bấm <strong>"Xác nhận giao dịch"</strong></li>
+      <li data-n="8">Chờ màn hình <strong>"Thành công"</strong></li>
+      <li data-n="9">Bấm <strong>"Giao dịch mới"</strong> → chuyển sang MKH tiếp theo</li>
+    </ul>
+
+    <div class="alert alert-info" style="margin-top:16px;">
+      <span class="alert-icon">📊</span>
+      <span>Thanh tiến trình và trạng thái cập nhật <strong>real-time</strong> trên màn hình VPBank Controller. Không cần giữ màn hình VPBank Controller mở — bạn có thể theo dõi hoặc để thiết bị yên.</span>
+    </div>
+
+    <div class="alert alert-warn" style="margin-top:8px;">
+      <span class="alert-icon">💡</span>
+      <span>Giữ <strong>màn hình luôn sáng</strong> trong quá trình chạy: Cài đặt → Màn hình → Thời gian tắt màn hình → chọn <em>Không bao giờ</em> (hoặc cắm sạc).</span>
+    </div>
+  </div>
+
+  <!-- ⑩ Lưu ý -->
+  <h2 id="luu-y">Lưu ý quan trọng</h2>
+  <div class="card">
+    <table>
+      <tr><th>Tình huống</th><th>Cách xử lý</th></tr>
+      <tr>
+        <td>MKH có prefix lạ (không PB/PE)</td>
+        <td>Tự động bỏ qua, chuyển MKH tiếp theo</td>
+      </tr>
+      <tr>
+        <td>Màn hình không phản hồi</td>
+        <td>Service tự retry, tối đa <strong>5 lần</strong> rồi bỏ qua MKH đó</td>
+      </tr>
+      <tr>
+        <td>App bị đóng giữa chừng</td>
+        <td>Mở lại → service nhớ <code>currentIndex</code>, tiếp tục từ MKH chưa xong</td>
+      </tr>
+      <tr>
+        <td>Muốn dừng giữa chừng</td>
+        <td>Nhấn <strong>"Dừng"</strong> trong VPBank Controller</td>
+      </tr>
+      <tr>
+        <td>PIN Smart OTP sai</td>
+        <td>Giao dịch đó thất bại, app tiếp tục MKH tiếp theo</td>
+      </tr>
+      <tr>
+        <td>VPBank NEO hiện captcha / xác thực thêm</td>
+        <td>Dừng app, xử lý thủ công, rồi chạy lại</td>
+      </tr>
+    </table>
+
+    <div class="alert alert-warn" style="margin-top:16px;">
+      <span class="alert-icon">🔒</span>
+      <span>PIN Smart OTP được lưu <strong>chỉ trong bộ nhớ RAM</strong> khi app đang chạy, không ghi xuống ổ lưu trữ. Mỗi lần mở app cần nhập lại.</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  VPBank Controller v1.1 · Build ngày 5/5/2026 · Chỉ dành cho mục đích nội bộ
+</footer>
+
+</body>
+</html>
