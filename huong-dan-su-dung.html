@@ -1,323 +1,468 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VPBank Controller – Hướng dẫn sử dụng</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPBankAT - Hướng dẫn cài đặt và sử dụng từ A-Z</title>
   <style>
     :root {
-      --primary: #004b8d;
-      --accent:  #e30613;
-      --bg:      #f4f6f9;
-      --card:    #ffffff;
-      --border:  #dde3ec;
-      --text:    #1a1a2e;
-      --muted:   #6b7280;
-      --success: #16a34a;
-      --warn:    #d97706;
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --ink: #162033;
+      --muted: #5f6f86;
+      --line: #d9e1ee;
+      --brand: #0057a8;
+      --accent: #d62839;
+      --good: #1f8f4e;
+      --warn: #c97a00;
+      --soft: #eef4fb;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #eef4fb 0%, #f8fbff 240px, #f3f6fb 240px);
+      color: var(--ink);
       line-height: 1.7;
     }
 
-    /* ── Header ── */
     header {
-      background: linear-gradient(135deg, var(--primary) 0%, #0070cc 100%);
+      padding: 42px 20px 30px;
       color: #fff;
-      padding: 40px 32px 32px;
+      background: linear-gradient(135deg, #00498c 0%, #0b6fcc 100%);
       text-align: center;
     }
-    header h1 { font-size: 2rem; letter-spacing: 1px; }
-    header p  { margin-top: 8px; opacity: .85; font-size: 1rem; }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 0.2px;
+    }
+
+    header p {
+      margin: 10px auto 0;
+      max-width: 760px;
+      opacity: 0.94;
+    }
+
     .badge {
       display: inline-block;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 20px;
-      padding: 2px 14px;
-      font-size: .8rem;
+      margin-top: 14px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 0.88rem;
       font-weight: 600;
-      margin-top: 10px;
-      letter-spacing: .5px;
     }
 
-    /* ── Layout ── */
     main {
-      max-width: 960px;
-      margin: 32px auto;
-      padding: 0 20px 60px;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 26px 18px 54px;
     }
 
-    /* ── Section titles ── */
-    h2 {
-      color: var(--primary);
-      font-size: 1.4rem;
-      border-left: 4px solid var(--accent);
-      padding-left: 12px;
-      margin: 40px 0 18px;
-    }
-    h3 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin: 22px 0 10px;
+    .grid {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
     }
 
-    /* ── Card ── */
-    .card {
+    .toc, .card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px 28px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(19, 41, 77, 0.06);
     }
 
-    /* ── Diagram boxes ── */
-    .diagram {
-      background: #0d1117;
-      color: #c9d1d9;
-      font-family: 'Cascadia Code', 'Consolas', monospace;
-      font-size: .82rem;
-      border-radius: 10px;
-      padding: 22px 24px;
-      overflow-x: auto;
-      line-height: 1.6;
-      white-space: pre;
-      margin-bottom: 20px;
+    .toc {
+      position: sticky;
+      top: 18px;
+      padding: 18px 18px 14px;
     }
 
-    /* ── Steps ── */
-    .steps { counter-reset: step; list-style: none; }
+    .toc h2 {
+      font-size: 1rem;
+      margin: 0 0 10px;
+      color: var(--brand);
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 0.95rem;
+    }
+
+    .toc li { margin: 6px 0; }
+
+    .toc a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: var(--brand);
+      text-decoration: underline;
+    }
+
+    .content {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card { padding: 24px; }
+
+    h2.section-title {
+      margin: 0 0 12px;
+      color: var(--brand);
+      font-size: 1.35rem;
+    }
+
+    h3 {
+      margin: 18px 0 10px;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    p { margin: 0 0 12px; }
+    ul, ol { margin: 0 0 12px; padding-left: 22px; }
+    li { margin: 6px 0; }
+
+    .note, .warn, .ok {
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      font-size: 0.95rem;
+    }
+
+    .note {
+      background: #f4f9ff;
+      border-color: #c9def8;
+    }
+
+    .warn {
+      background: #fff8eb;
+      border-color: #f1d193;
+    }
+
+    .ok {
+      background: #f1fbf4;
+      border-color: #b7e2c4;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: step;
+    }
+
     .steps li {
       counter-increment: step;
-      display: flex;
-      gap: 16px;
-      margin-bottom: 18px;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 14px;
+      margin: 14px 0;
+      align-items: start;
     }
+
     .steps li::before {
       content: counter(step);
-      min-width: 32px;
-      height: 32px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: var(--primary);
+      background: var(--brand);
       color: #fff;
-      font-weight: 700;
-      font-size: .9rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
+      font-weight: 700;
       margin-top: 2px;
     }
-    .steps li .content strong { color: var(--primary); }
 
-    /* ── Table ── */
+    code, pre { font-family: Consolas, "Cascadia Code", monospace; }
+
+    code {
+      background: #eef2f8;
+      border: 1px solid #d9e3f1;
+      color: #b42318;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+
+    pre {
+      margin: 12px 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #0e1624;
+      color: #e7eefc;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: .92rem;
+      font-size: 0.94rem;
       margin-top: 10px;
     }
-    th {
-      background: var(--primary);
-      color: #fff;
-      padding: 10px 14px;
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
       text-align: left;
-    }
-    td {
-      padding: 9px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    tr:nth-child(even) td { background: #f8faff; }
-
-    /* ── Code inline ── */
-    code {
-      background: #eef2f7;
-      border: 1px solid #d0d9e8;
-      border-radius: 4px;
-      padding: 1px 6px;
-      font-family: 'Cascadia Code', 'Consolas', monospace;
-      font-size: .88em;
-      color: #c0392b;
+      vertical-align: top;
     }
 
-    /* ── Alert boxes ── */
-    .alert {
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin: 14px 0;
-      font-size: .93rem;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
+    th {
+      background: var(--soft);
+      color: var(--brand);
     }
-    .alert-info    { background: #eff6ff; border-left: 4px solid #3b82f6; }
-    .alert-warn    { background: #fffbeb; border-left: 4px solid var(--warn); }
-    .alert-success { background: #f0fdf4; border-left: 4px solid var(--success); }
-    .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
 
-    /* ── Flow list ── */
-    .flow-list {
-      list-style: none;
-      padding: 0;
-    }
-    .flow-list li {
-      padding: 8px 0 8px 36px;
-      position: relative;
-      border-bottom: 1px dashed var(--border);
-    }
-    .flow-list li:last-child { border-bottom: none; }
-    .flow-list li::before {
-      content: attr(data-n);
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 24px;
-      height: 24px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 50%;
-      font-size: .75rem;
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* ── Prefix badges ── */
-    .pb { background:#1d4ed8; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82rem; font-weight:700; }
-    .pe { background:#7c3aed; color:#fff; border-radius:4px; padding:1px 8px; font-size:.82rem; font-weight:700; }
+    .pill.good {
+      background: #e8f7ee;
+      color: var(--good);
+    }
 
-    /* ── Footer ── */
+    .pill.warn {
+      background: #fff4de;
+      color: var(--warn);
+    }
+
     footer {
-      text-align: center;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 18px 38px;
       color: var(--muted);
-      font-size: .82rem;
-      padding: 30px;
-      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
     }
 
-    /* ── TOC ── */
-    .toc {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px 26px;
-      margin-bottom: 32px;
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .toc { position: static; }
     }
-    .toc h4 { color: var(--primary); margin-bottom: 10px; }
-    .toc ol  { padding-left: 20px; }
-    .toc li  { margin-bottom: 4px; }
-    .toc a   { color: var(--primary); text-decoration: none; }
-    .toc a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+  <header>
+    <h1>VPBankAT - Hướng dẫn cài đặt và sử dụng từ A-Z</h1>
+    <p>Tài liệu này dùng để share repo cho người khác cài đặt, build, cài APK và chạy đúng quy trình trên điện thoại Android.</p>
+    <div class="badge">Bản hướng dẫn thực chiến - cập nhật theo code mới nhất</div>
+  </header>
 
-<header>
-  <h1>⚡ VPBank Controller</h1>
-  <p>Công cụ tự động thanh toán hóa đơn điện qua VPBank NEO</p>
-  <div class="badge">v1.1 · Release Build · Tháng 5/2026</div>
-</header>
+  <main>
+    <div class="grid">
+      <aside class="toc">
+        <h2>Mục lục</h2>
+        <ol>
+          <li><a href="#tong-quan">Tổng quan</a></li>
+          <li><a href="#chuan-bi">Chuẩn bị trước khi cài</a></li>
+          <li><a href="#clone">Clone repo</a></li>
+          <li><a href="#build">Build APK</a></li>
+          <li><a href="#cai-apk">Cài APK lên điện thoại</a></li>
+          <li><a href="#cap-quyen">Cấp quyền cần thiết</a></li>
+          <li><a href="#cach-dung">Cách dùng app</a></li>
+          <li><a href="#auto-all">Luồng Auto All</a></li>
+          <li><a href="#resume">Resume danh sách MKH</a></li>
+          <li><a href="#bao-mat">USB Debug và Developer Options</a></li>
+          <li><a href="#su-co">Lỗi thường gặp</a></li>
+          <li><a href="#chia-se">Cách share cho người khác</a></li>
+        </ol>
+      </aside>
 
-<main>
+      <section class="content">
+        <article class="card" id="tong-quan">
+          <h2 class="section-title">1. Tổng quan</h2>
+          <p>App này dùng để hỗ trợ thao tác tự động với app VPBank trên điện thoại, trọng tâm hiện tại là:</p>
+          <ul>
+            <li>Tự detect app VPBank trên máy Android.</li>
+            <li>Mở app VPBank bằng nút <code>VPBank</code> với retry nội bộ để tăng độ ổn định.</li>
+            <li>Chạy luồng Auto All với danh sách MKH.</li>
+            <li>Resume danh sách MKH và vị trí đang chạy dở.</li>
+            <li>Hiển thị trạng thái, log sự kiện, và cảnh báo bảo mật.</li>
+          </ul>
+          <div class="ok">Hiện tại bản mới đã có thể mở app VPBank end-to-end trên máy test. Phần login hoặc flow nghiệp vụ sâu hơn có thể tiếp tục tối ưu sau.</div>
+        </article>
 
-  <!-- TOC -->
-  <div class="toc">
-    <h4>📋 Mục lục</h4>
-    <ol>
-      <li><a href="#kien-truc">Kiến trúc ứng dụng</a></li>
-      <li><a href="#state-machine">Sơ đồ State Machine</a></li>
-      <li><a href="#file-import">Luồng xử lý file import</a></li>
-      <li><a href="#yeu-cau">Yêu cầu</a></li>
-      <li><a href="#cai-apk">Bước 1 – Cài APK</a></li>
-      <li><a href="#accessibility">Bước 2 – Bật Accessibility Service</a></li>
-      <li><a href="#file-mkh">Bước 3 – Chuẩn bị file MKH</a></li>
-      <li><a href="#nhap-tt">Bước 4 – Nhập thông tin trong app</a></li>
-      <li><a href="#chay">Bước 5 – Chạy tự động</a></li>
-      <li><a href="#luu-y">Lưu ý quan trọng</a></li>
-    </ol>
-  </div>
+        <article class="card" id="chuan-bi">
+          <h2 class="section-title">2. Chuẩn bị trước khi cài</h2>
+          <table>
+            <tr>
+              <th>Hạng mục</th>
+              <th>Yêu cầu</th>
+            </tr>
+            <tr>
+              <td>Hệ điều hành PC</td>
+              <td>Windows 10/11</td>
+            </tr>
+            <tr>
+              <td>JDK</td>
+              <td>JDK 17</td>
+            </tr>
+            <tr>
+              <td>Android SDK</td>
+              <td>Có <code>platform-tools</code> và Build Tools phù hợp</td>
+            </tr>
+            <tr>
+              <td>Android Studio</td>
+              <td>Khuyên dùng để mở project và build</td>
+            </tr>
+            <tr>
+              <td>Điện thoại</td>
+              <td>Android có cài sẵn app VPBank</td>
+            </tr>
+          </table>
+          <div class="note">Nếu chỉ cần cài bản build sẵn cho bạn bè, có thể bỏ qua phần build source và dùng APK đã build sẵn nếu bạn cung cấp riêng.</div>
+        </article>
 
-  <!-- ① Kiến trúc -->
-  <h2 id="kien-truc">1. Kiến trúc ứng dụng</h2>
-  <div class="card">
-    <p style="margin-bottom:14px;color:var(--muted);font-size:.92rem;">
-      App gồm 4 thành phần chính giao tiếp qua <strong>LocalBroadcast</strong> và <strong>SharedPreferences</strong>.
-      Service sử dụng Android Accessibility API để điều khiển VPBank NEO.
-    </p>
-    <div class="diagram">┌─────────────────────────────────────────────────────────────────────┐
-│                        VPBank Controller                            │
-│                                                                     │
-│  ┌──────────────────────┐         ┌───────────────────────────────┐ │
-│  │    MainActivity      │         │  BillPaymentAccessibility     │ │
-│  │    (Giao diện)       │         │  Service  (State Machine)     │ │
-│  │                      │         │                               │ │
-│  │  • Import TXT/CSV/   │         │  • Lắng nghe sự kiện UI      │ │
-│  │    XLSX              │◄───────►│    của VPBank NEO             │ │
-│  │  • Nhập PIN 6 số     │         │  • Tự động click / nhập text  │ │
-│  │  • Nút Bắt đầu/Dừng │         │  • Xử lý từng MKH theo       │ │
-│  │  • Thanh tiến trình  │         │    vòng lặp                   │ │
-│  └──────────┬───────────┘         └───────────────────────────────┘ │
-│             │ LocalBroadcast              ▲ LocalBroadcast           │
-│             │ ACTION_START / STOP         │ ACTION_PROGRESS          │
-│             ▼                             │                          │
-│  ┌──────────────────────┐    ┌────────────┴──────────────────────┐  │
-│  │      AppConfig       │    │        SharedPreferences          │  │
-│  │   (hằng số + state)  │    │  • Danh sách MKH (JSON)          │  │
-│  │                      │    │  • currentIndex                   │  │
-│  │  currentMkhPrefix    │    │  • isRunning                      │  │
-│  │  TEXT_ELEC_TOAN_QUOC │    │  • vpbankPackage                  │  │
-│  │  TEXT_ELEC_HCM       │    │                                   │  │
-│  └──────────────────────┘    └───────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
-                                       │
-                       Android Accessibility API
-                                       │
-                             ┌─────────▼──────────┐
-                             │    VPBank NEO App  │
-                             │  com.vnpay.vpbank  │
-                             │     online         │
-                             └────────────────────┘</div>
-  </div>
+        <article class="card" id="clone">
+          <h2 class="section-title">3. Clone repo</h2>
+          <ol class="steps">
+            <li><div><strong>Mở terminal</strong><p>Dùng PowerShell, CMD hoặc terminal trong VS Code.</p></div></li>
+            <li><div><strong>Clone project</strong><pre>git clone https://github.com/tatonline2025-prog/VPBankAT.git
+cd VPBankAT</pre></div></li>
+            <li><div><strong>Mở project</strong><p>Mở thư mục project bằng Android Studio hoặc VS Code.</p></div></li>
+          </ol>
+        </article>
 
-  <!-- ② State Machine -->
-  <h2 id="state-machine">2. Sơ đồ State Machine</h2>
-  <div class="card">
-    <p style="margin-bottom:14px;color:var(--muted);font-size:.92rem;">
-      Service hoạt động như một máy trạng thái. Mỗi sự kiện từ VPBank NEO kích hoạt bước xử lý tiếp theo.
-    </p>
-    <div class="diagram">                       ┌─────────┐
-                       │  IDLE   │◄─────────────── Nhấn Dừng
-                       └────┬────┘
-                            │ Nhấn Bắt đầu
-                            ▼
-                  ┌──────────────────────┐
-                  │  SELECT_ELEC_TYPE    │  ← Đọc 2 ký tự đầu MKH
-                  └──────────┬───────────┘
-                             │
-              ┌──────────────┼──────────────┐
-           "PB"           "PE"          Khác
-              │               │               │
-              ▼               ▼               ▼
-        Click              Click          Bỏ qua
-      "Điện toàn         "Điện HCM"    index++ → lặp lại
-        quốc"
-              │               │
-              └───────┬───────┘
-                      ▼
-               ┌────────────┐
-               │ INPUT_MKH  │  ← Xoá text cũ, gõ MKH
-               └─────┬──────┘
-                     ▼
-            ┌──────────────────┐
+        <article class="card" id="build">
+          <h2 class="section-title">4. Build APK</h2>
+          <h3>Cách 1 - Build bằng Android Studio</h3>
+          <ol class="steps">
+            <li><div><strong>Mở project trong Android Studio</strong><p>Chờ Gradle sync hoàn tất.</p></div></li>
+            <li><div><strong>Chọn Build APK</strong><p>Vào <code>Build &gt; Build Bundle(s) / APK(s) &gt; Build APK(s)</code>.</p></div></li>
+            <li><div><strong>Lấy file APK</strong><p>File APK thường nằm tại:</p><pre>app/build/outputs/apk/debug/app-debug.apk</pre></div></li>
+          </ol>
+
+          <h3>Cách 2 - Build bằng command line</h3>
+          <pre>gradlew.bat assembleDebug</pre>
+          <div class="note">Nếu lỗi JDK, hãy bảo đảm máy đang dùng JDK 17 thay vì JDK 21 hoặc JDK 25.</div>
+        </article>
+
+        <article class="card" id="cai-apk">
+          <h2 class="section-title">5. Cài APK lên điện thoại</h2>
+          <h3>Cách 1 - Cài thủ công</h3>
+          <ul>
+            <li>Chép file <code>app-debug.apk</code> vào điện thoại.</li>
+            <li>Mở file APK và cho phép cài từ nguồn không xác định nếu máy hỏi.</li>
+          </ul>
+
+          <h3>Cách 2 - Cài qua ADB</h3>
+          <pre>adb devices
+adb install -r app/build/outputs/apk/debug/app-debug.apk</pre>
+          <div class="warn">Muốn cài qua ADB thì phải bật USB Debugging tạm thời. Sau khi cài xong và test detect hoặc mở app VPBank xong thì nên tắt lại để app bank hoạt động đúng điều kiện bảo mật.</div>
+        </article>
+
+        <article class="card" id="cap-quyen">
+          <h2 class="section-title">6. Cấp quyền cần thiết</h2>
+          <ol class="steps">
+            <li><div><strong>Bật Trợ năng</strong><p>Vào <code>Cài đặt &gt; Trợ năng &gt; VPBank Controller / VPBankAT &gt; Bật</code>.</p></div></li>
+            <li><div><strong>Không tắt màn hình khi đang auto</strong><p>Trong lúc chạy auto, giữ màn hình sáng và không khóa máy.</p></div></li>
+            <li><div><strong>Cho phép app không bị kill nền nếu cần</strong><p>Một số máy Realme, Xiaomi hoặc Oppo có thể tự tắt app nền quá sớm.</p></div></li>
+          </ol>
+        </article>
+
+        <article class="card" id="cach-dung">
+          <h2 class="section-title">7. Cách dùng app</h2>
+          <ol class="steps">
+            <li><div><strong>Mở app</strong><p>Màn hình chính sẽ có các khu vực: package VPBank, PIN Smart OTP, danh sách MKH, 3 nút điều khiển, Auto All, trạng thái bảo mật và log sự kiện.</p></div></li>
+            <li><div><strong>Nhập PIN Smart OTP</strong><p>Nhập đúng 6 chữ số. PIN chỉ lưu tạm trong RAM.</p></div></li>
+            <li><div><strong>Nhập hoặc import danh sách MKH</strong><p>Có thể gõ trực tiếp hoặc bấm nút <code>TXT/CSV</code> để import.</p></div></li>
+            <li><div><strong>Bấm nút VPBank</strong><p>App sẽ tự scan candidate, detect package đúng, rồi gửi lệnh mở app VPBank.</p></div></li>
+            <li><div><strong>Bấm Bắt đầu hoặc Auto All</strong><p>Nếu các điều kiện đã đủ, app sẽ bắt đầu luồng tự động.</p></div></li>
+          </ol>
+        </article>
+
+        <article class="card" id="auto-all">
+          <h2 class="section-title">8. Luồng Auto All</h2>
+          <p>Nút <code>Auto All</code> được thiết kế để gom các bước lại thành một flow:</p>
+          <ol>
+            <li>Check Trợ năng.</li>
+            <li>Check danh sách MKH.</li>
+            <li>Check PIN Smart OTP.</li>
+            <li>Check Developer Options và USB Debugging.</li>
+            <li>Detect package VPBank.</li>
+            <li>Mở app VPBank.</li>
+            <li>Gửi lệnh START cho service automation.</li>
+          </ol>
+          <div class="ok">Nếu quay lại app từ màn hình Developer Settings, flow có thể tiếp tục lại mà không cần làm lại toàn bộ từ đầu.</div>
+        </article>
+
+        <article class="card" id="resume">
+          <h2 class="section-title">9. Resume danh sách MKH</h2>
+          <p>Bản hiện tại có cơ chế resume:</p>
+          <ul>
+            <li>Lưu draft danh sách MKH.</li>
+            <li>Lưu current index đang chạy.</li>
+            <li>Nếu app mở lại mà danh sách không đổi, có thể tiếp tục từ vị trí đang dở.</li>
+          </ul>
+          <div class="note">Nếu đổi hẳn danh sách MKH thì app sẽ chạy lại từ đầu.</div>
+        </article>
+
+        <article class="card" id="bao-mat">
+          <h2 class="section-title">10. USB Debug và Developer Options</h2>
+          <div class="warn">App VPBank có thể không cho mở hoặc không hoạt động bình thường nếu điện thoại đang bật <strong>USB Debugging</strong> hoặc <strong>Developer Options</strong>.</div>
+
+          <h3>Quy trình đúng để test</h3>
+          <ol>
+            <li>Bật USB Debugging tạm thời để cài APK hoặc test bằng ADB.</li>
+            <li>Test detect hoặc mở app VPBank cho chắc chắn.</li>
+            <li>Tắt USB Debugging.</li>
+            <li>Nếu vẫn bị chặn, tắt luôn Developer Options.</li>
+            <li>Quay lại app và bấm Auto All hoặc VPBank.</li>
+          </ol>
+
+          <p>App hiện đã có badge trạng thái bảo mật để báo trực tiếp:</p>
+          <ul>
+            <li><span class="pill good">Dev OFF, USB Debug OFF</span></li>
+            <li><span class="pill warn">Dev ON hoặc USB Debug ON</span></li>
+          </ul>
+        </article>
+
+        <article class="card" id="su-co">
+          <h2 class="section-title">11. Lỗi thường gặp và cách xử lý</h2>
+          <table>
+            <tr><th>Hiện tượng</th><th>Cách xử lý</th></tr>
+            <tr><td>Bấm VPBank nhưng không mở app bank</td><td>Kiểm tra điện thoại có cài app VPBank chưa, badge bảo mật có đang báo USB Debug ON hoặc Dev ON không, và thử lại 1-2 lần vì app đã có retry nội bộ.</td></tr>
+            <tr><td>Không scan ra app VPBank</td><td>Kiểm tra package thật sự trên máy, cập nhật app VPBank mới nhất, thử mở app bank thủ công trước một lần.</td></tr>
+            <tr><td>Auto đang chạy thì đứng</td><td>Không tắt màn hình, không chuyển sang app khác, kiểm tra Trợ năng còn bật hay không.</td></tr>
+            <tr><td>Không cài được APK bằng ADB</td><td>Kiểm tra <code>adb devices</code>, xác nhận điện thoại ở trạng thái <code>device</code>, không phải <code>unauthorized</code>.</td></tr>
+            <tr><td>Lỗi build Gradle</td><td>Đảm bảo dùng JDK 17 và Android SDK đầy đủ.</td></tr>
+          </table>
+        </article>
+
+        <article class="card" id="chia-se">
+          <h2 class="section-title">12. Cách share repo cho người khác</h2>
+          <ol class="steps">
+            <li><div><strong>Gửi link repo</strong><p>Gửi link GitHub repo này cho bạn bè.</p></div></li>
+            <li><div><strong>Yêu cầu họ đọc file này trước</strong><p>File hướng dẫn nằm ngay ở root repo: <code>huong-dan-su-dung.html</code>.</p></div></li>
+            <li><div><strong>Nếu chỉ cần dùng nhanh</strong><p>Bạn có thể gửi kèm file APK đã build để họ cài trực tiếp, không cần build source.</p></div></li>
+            <li><div><strong>Nếu họ muốn tự build</strong><p>Họ chỉ cần làm đúng các bước trong tài liệu này là đủ.</p></div></li>
+          </ol>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    VPBankAT - Tài liệu cài đặt và sử dụng từ A-Z. Cập nhật cho bản repo mới nhất.
+  </footer>
+</body>
+</html>
             │ CLICK_TIEP_TUC_1 │  ← Bấm "Tiếp tục"
             └────────┬─────────┘
                      ▼
